@@ -1,0 +1,32 @@
+# Some SHACL constraints to be applied against out/bulk/All.trig
+@base <http://w3id.org/marco-bolo/shacl-constraints/>.
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+<MboIdentifierUsedInMultipleGraphs>
+	a sh:NodeShape ;
+	sh:targetSubjectsOf rdf:type;
+	sh:sparql [
+		a sh:SPARQLConstraint ; 
+        sh:severity sh:Violation;
+		sh:message "The same MBO identifier should not be used in different CSV files." ;
+		sh:select """
+            SELECT $this (CONCAT("MBO Identifier '", STRAFTER(str($this), "https://w3id.org/marco-bolo/"),"' has been used multiple times in: ", GROUP_CONCAT(?csvFile)) as ?value) 
+            WHERE {
+                {
+                    SELECT DISTINCT $this (CONCAT(STRBEFORE(STRAFTER(str(?g), "file:///work/out/bulk/"), ".ttl"), ".csv") as ?csvFile) 
+                    WHERE {
+                        GRAPH ?g {
+                            $this a [].
+                            FILTER (STRSTARTS(STR($this), "https://w3id.org/marco-bolo/")).
+                        }
+                    }
+                }
+            }
+            GROUP BY $this
+            HAVING(COUNT(DISTINCT ?csvFile) > 1)
+        """ ;
+	] .

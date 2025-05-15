@@ -59,6 +59,9 @@ out/bulk/%.json: out/bulk/%.ttl
 	@$(RIOT) --syntax ttl --out json-ld "$<" > "$@";
 	@echo "";
 
+out/bulk/All.trig: $(BULK_TTL_FILES)
+	@$(SPARQL) --quiet $(^:out/bulk/%.ttl=--namedGraph out/bulk/%.ttl) "CONSTRUCT { GRAPH ?g { ?s ?p ?o. } } WHERE { GRAPH ?g { ?s ?p ?o. } }" > out/bulk/All.trig
+
 bulk-ttl: $(BULK_TTL_FILES) remove-orphaned
 
 jsonld: $(BULK_TTL_FILES)

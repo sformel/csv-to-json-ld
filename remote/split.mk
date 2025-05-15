@@ -53,8 +53,8 @@ out/%.json: out/raw-jsonld/%.json
 	
 	@cat "$<" \
 		| sed 's/https:\/\/schema.org\//http:\/\/schema.org\//g' \
-		| ($(JSONLD_CLI) compact --context "$(SCHEMA_ORG_FILE)" --allow all) \
-		| ($(JQ) '.["@context"] = { "@import": "https://schema.org/", "schema": "https://schema.org/" }') > "$@";
+		| $(JSONLD_CLI) compact --context "$(SCHEMA_ORG_FILE)" --allow all \
+		| $(JQ) '.["@context"] = { "@import": "https://schema.org/", "schema": "https://schema.org/" }' > "$@";
 
 	@echo "";
 
