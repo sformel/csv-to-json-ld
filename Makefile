@@ -2,19 +2,20 @@
 .PHONY: dockersetup output-directories jsonld clean bulk-ttl bulk-jsonld all init remove-orphaned
 
 WORKING_DIR			:= $(shell pwd)
-USER				:= $(echo "$$USER")
+UID					:= $(shell id -u)
+GID					:= $(shell id -g)
 
 CSVW_CHECK_DOCKER	:= roblinksdata/csvw-check:latest
 CSV2RDF_DOCKER		:= europe-west2-docker.pkg.dev/swirrl-devops-infrastructure-1/public/csv2rdf:v0.7.1
 JENA_CLI_DOCKER		:= gsscogs/gss-jvm-build-tools:latest
 MBO_TOOLS_DOCKER	:= ghcr.io/marco-bolo/csv-to-json-ld-tools:latest
 
-CSVW_CHECK						:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(CSVW_CHECK_DOCKER) -s
-CSV2RDF							:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(CSV2RDF_DOCKER) csv2rdf -m minimal -u 
-RIOT							:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DOCKER) riot
-SPARQL							:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DOCKER) sparql
+CSVW_CHECK						:= docker run --rm -v "$(WORKING_DIR)":/work -u $(UID):$(GID) -w /work $(CSVW_CHECK_DOCKER) -s
+CSV2RDF							:= docker run --rm -v "$(WORKING_DIR)":/work -u $(UID):$(GID) -w /work $(CSV2RDF_DOCKER) csv2rdf -m minimal -u 
+RIOT							:= docker run --rm -v "$(WORKING_DIR)":/work -u $(UID):$(GID) -w /work $(JENA_CLI_DOCKER) riot
+SPARQL							:= docker run --rm -v "$(WORKING_DIR)":/work -u $(UID):$(GID) -w /work $(JENA_CLI_DOCKER) sparql
 
-MBO_TOOLS_DOCKER_RUN			:= docker run -i --rm -v "$(WORKING_DIR)":/work -u "$(USER)":"$(USER)" -w /work "$(MBO_TOOLS_DOCKER)"
+MBO_TOOLS_DOCKER_RUN			:= docker run -i --rm -v "$(WORKING_DIR)":/work -u $(UID):$(GID) -w /work "$(MBO_TOOLS_DOCKER)"
 CONVERT_LIST_VALUES_TO_NODES	:= $(MBO_TOOLS_DOCKER_RUN) listcolumnsasnodes
 LIST_COLUMN_FOREIGN_KEY_CHECK	:= $(MBO_TOOLS_DOCKER_RUN) listcolumnforeignkeycheck
 UNION_UNIQUE_IDENTIFIERS		:= $(MBO_TOOLS_DOCKER_RUN) unionuniqueidentifiers
