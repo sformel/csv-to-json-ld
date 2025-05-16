@@ -58,6 +58,9 @@
                     FILTER NOT EXISTS {
                         GRAPH ?g2 {
                             ?s2 ?p2 $this.
+                            FILTER NOT EXISTS {
+                                ?s2 a <https://w3id.org/marco-bolo/InputMetadataDescription>.
+                            }
                         }
                     }
                 }
