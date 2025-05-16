@@ -53,12 +53,13 @@
                 GRAPH ?g1 {
                     $this ?p1 ?o1.
                     FILTER NOT EXISTS {
-                        $this a <https://w3id.org/marco-bolo/InputMetadataDescription>.
-                    }
-                    FILTER NOT EXISTS {
-                        # Exclude comments from this report. 
                         $this a ?type.
-                        FILTER (?type IN (<https://schema.org/Comment>)).
+                        FILTER (
+                            ?type IN (
+                                <https://w3id.org/marco-bolo/InputMetadataDescription>, # Exclude para-metadata records from the report.
+                                <https://schema.org/Comment>, # Exclude comments from this report. 
+                            )
+                        ).
                     }
                     FILTER NOT EXISTS {
                         GRAPH ?g2 {
