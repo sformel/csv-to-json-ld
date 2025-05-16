@@ -56,6 +56,11 @@
                         $this a <https://w3id.org/marco-bolo/InputMetadataDescription>.
                     }
                     FILTER NOT EXISTS {
+                        # Exclude comments from this report. 
+                        $this a ?type.
+                        FILTER (?type IN (<https://schema.org/Comment>)).
+                    }
+                    FILTER NOT EXISTS {
                         GRAPH ?g2 {
                             ?s2 ?p2 $this.
                             FILTER NOT EXISTS {
