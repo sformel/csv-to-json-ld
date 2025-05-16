@@ -21,6 +21,9 @@
                     WHERE {
                         GRAPH ?g {
                             $this a [].
+                            FILTER NOT EXISTS {
+                                $this a <https://w3id.org/marco-bolo/InputMetadataDescription>.
+                            }
                             FILTER (STRSTARTS(STR($this), "https://w3id.org/marco-bolo/")).
                         }
                     }
