@@ -57,7 +57,7 @@
                         FILTER (
                             ?type IN (
                                 <https://w3id.org/marco-bolo/InputMetadataDescription>, # Exclude para-metadata records from the report.
-                                <https://schema.org/Comment>, # Exclude comments from this report. 
+                                <https://schema.org/Comment> # Exclude comments from this report. 
                             )
                         ).
                     }
