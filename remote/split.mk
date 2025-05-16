@@ -12,7 +12,7 @@ MBO_TOOLS_DOCKER		:= ghcr.io/marco-bolo/csv-to-json-ld-tools:pr-34
 
 RIOT					:= docker run --rm -v "$(WORKING_DIR)":/work -u "$(UID)":"$(GID)" -w /work $(JENA_CLI_DOCKER) riot
 SPARQL					:= docker run --rm -v "$(WORKING_DIR)":/work -u "$(UID)":"$(GID)" -w /work $(JENA_CLI_DOCKER) sparql
-MBO_TOOLS_DOCKER_RUN	:= docker run --rm -v "$(WORKING_DIR)":/work -u "$(UID)":"$(GID)" -w /work "$(MBO_TOOLS_DOCKER)"
+MBO_TOOLS_DOCKER_RUN	:= docker run -i --rm -v "$(WORKING_DIR)":/work -u "$(UID)":"$(GID)" -w /work "$(MBO_TOOLS_DOCKER)"
 JQ						:= $(MBO_TOOLS_DOCKER_RUN) jq
 JSONLD_CLI				:= $(MBO_TOOLS_DOCKER_RUN) jsonld
 PARTITON_CLI			:= $(MBO_TOOLS_DOCKER_RUN) partition execute
@@ -50,7 +50,7 @@ out/%.json: out/raw-jsonld/%.json
 	@# 		instead of `"@type": "https://schema.org/Dataset"`
 	@# 4. Then we set the context to make use of the schema.org context, but tell it to use https URIs instead 
 	@# 		of http.
-	
+
 	@cat "$<" \
 		| sed 's/https:\/\/schema.org\//http:\/\/schema.org\//g' \
 		| $(JSONLD_CLI) compact --context "$(SCHEMA_ORG_FILE)" --allow all \
