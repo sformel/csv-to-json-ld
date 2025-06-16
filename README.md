@@ -7,6 +7,17 @@ Learn more about WP1 here: [https://marcobolo-project.eu/work-packages/work-pack
 
 This tool helps researchers and data managers transform metadata from structured CSV files into **JSON-LD** conforming to **Schema.org** and ready for harvesting by the [ODIS Catalog](https://catalog.odis.org/).
 
+## Table of Contents
+
+- [Project Context](#-project-context)
+- [How It Works](#️-how-it-works)
+- [Workflow Summary](#-workflow-summary)
+- [Getting Started (No Installation Required)](#-getting-started-no-installation-required)
+- [Hosting and Registration](#-hosting-and-registration)
+- [Documentation & Resources](#-documentation--resources)
+- [Human Workflow](#-human-workflow)
+- [License](#-license)
+
 ## Project Context
 
 WP1 of MARCO-BOLO supports the production of high-quality, FAIR metadata. This repository provides the reference toolchain for transforming project metadata into a format compatible with global discovery platforms such as ODIS.
@@ -16,12 +27,19 @@ WP1 of MARCO-BOLO supports the production of high-quality, FAIR metadata. This r
 The tool uses:
 
 - **[LinkML](https://linkml.io/)** to define metadata models (e.g., Dataset, Person, Organization)
-- **CSV-W** metadata files to describe CSV structure
-- A **Makefile** and GitHub Actions to automate validation and transformation steps
-- **W3IDs** for stable context and schema identifiers of the metadata models.
-- **Schema.org** as the target vocabulary for JSON-LD output
+- **[CSV-W](https://csvw.org/)** metadata files to describe CSV structure
+- A **[Makefile](https://opensource.com/article/18/8/what-how-makefile)** and [GitHub Actions](https://github.com/features/actions) to automate validation and transformation steps
+- **[W3IDs](https://w3id.org/)** for stable context and schema identifiers of the metadata models.
+- **[Schema.org](https://schema.org/)** as the target vocabulary for JSON-LD output
 
 ### Workflow Summary
+
+flowchart TD
+    A[Fill in CSV templates<br/>(e.g. Dataset.csv, Person.csv)] --> B[Commit changes to GitHub<br/>Triggers GitHub Actions]
+    B --> C[Download JSON-LD artifact<br/>from GitHub Actions build]
+    C --> D[Host JSON-LD file<br/>at a public web location]
+    D --> E[Register JSON-LD endpoint<br/>with ODIS catalog]
+
 
 1. Fill in CSV templates (e.g. `Dataset.csv`, `Person.csv`)
 2. Commit changes; this kicks off GitHub Actions.
