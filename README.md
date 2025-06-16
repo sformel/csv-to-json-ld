@@ -1,134 +1,113 @@
-# Experimental CSV-W representation of data for MBO
 
-## Prerequisites
+# MARCO-BOLO CSV-to-JSON-LD Tool
 
-N.B. This requires that the build system has [make](https://www.gnu.org/software/make/) and [docker](https://www.docker.com/) installed.
+This repository contains a metadata publishing tool developed for **Work Package 1 (WP1)** of the [**MARCO-BOLO** project](https://marcobolo-project.eu/) (MARine COastal BiOdiversity Long-term Observations). WP1 focuses on data literacy and metadata flow across the project.
 
-## Data CSVs
+Learn more about WP1 here: [https://marcobolo-project.eu/work-packages/work-package-1](https://marcobolo-project.eu/work-packages/work-package-1)
 
-End-users should ignore (or perhaps not see) all of the other files which arecurrently stored in [remote](./remote/). But they're necessary for validating the data and converting it to an RDF representation.
+This tool helps researchers and data managers transform metadata from structured CSV files into **JSON-LD** conforming to **Schema.org** and ready for harvesting by the [ODIS Catalog](https://catalog.odis.org/).
 
-For detailed information about the CSV files and definitions of the columns they contain, see [class-descriptions.md](./class-descriptions.md).
+## Project Context
 
-## Before doing anything
+WP1 of MARCO-BOLO supports the production of high-quality, FAIR metadata. This repository provides the reference toolchain for transforming project metadata into a format compatible with global discovery platforms such as ODIS.
 
-Make sure you run the `init` command so that it can create the right output directories as well as pulling the required docker containers.
+## How It Works
 
-```bash
-$ make init
-```
+The tool uses:
 
-## Validating the data
+- **[LinkML](https://linkml.io/)** to define metadata models (e.g., Dataset, Person, Organization)
+- **CSV-W** metadata files to describe CSV structure
+- A **Makefile** and GitHub Actions to automate validation and transformation steps
+- **W3IDs** for stable context and schema identifiers of the metadata models.
+- **Schema.org** as the target vocabulary for JSON-LD output
 
-### CSV-W and Manual Foreign Key Constraints
+### Workflow Summary
 
-```bash
-$ make validate
-=============================== Pulling latest required docker images. ===============================
-...
+1. Fill in CSV templates (e.g. `Dataset.csv`, `Person.csv`)
+2. Commit changes; this kicks off GitHub Actions.
+3. Download the JSON-LD files as an 'artifact' from the GitHub Action.
+4. Make the JSON-LD publicly available on the internet as metadata for your resource (e.g. dataset)
+5. Register the JSON-LD endpoint with [ODIS](https://catalog.odis.org)
 
-=============================== Validating remote/dataset-metadata.json ===============================
-Valid CSV-W
+### Getting Started (No Installation Required)
+You can contribute metadata to MARCO-BOLO directly in your browser — no need to install anything locally.
 
-=============================== Validating remote/eov-metadata.json ===============================
-Valid CSV-W
-```
+1. Create a GitHub Account
+Go to https://github.com/signup and create a free GitHub account.
 
-It will (hopefully) tell you if you get something wrong, for instance referencing an EOV which isn't defined.
+Contact the Work Package 1 (WP1) team to be added to the MARCO-BOLO organization and granted editing permissions. You won’t be able to contribute metadata until this is done.
 
-### The SHACL Report
+2. Set Up Your GitHub.dev Environment
+To edit metadata CSV files in a spreadsheet-like view:
 
-There are some forms of invalid data which can only be detected when looking at the data in its entirety. For instance we check to ensure that an MBO Identifier hasn't been (accidentally) reused in different CSV files; further, we want to generate a report of entities which have been defined but don't seem to be referenced anywhere else in the dataset. These constraints are applied via SHACL constraints (see [remote/shacl.ttl](./remote/shacl.ttl)). Violations cause the build to fail, warnings do not cause the build to fail.
+Open the recommended GitHub.dev profile.
 
-```bash
-$ make shacl-report
+Click the “Create” button.
 
-The SHACL Report:
+If prompted, trust and install the “Excel Viewer” extension from MESCIUS. This enables spreadsheet-style editing of CSV files.
 
-First looking for any violations:
+Tick the box: “Use this profile as the default for new windows”.
 
-+----------+
-| Conforms |
-+----------+
-|   True   |
-+----------+
+This configures your browser to open CSVs with a table-based view.
 
+3. Edit Metadata in the Repo
+Open the MARCO-BOLO metadata editor:
+https://github.dev/marco-bolo/csv-to-json-ld/tree/wp1-playground
 
-Now looking for any warnings or info:
+Sign in to GitHub when prompted and authorize GitHub.dev to access your account.
 
-+----------+
-| Conforms |
-+----------+
-|  False   |
-+----------+
+Browse to the relevant CSV file (e.g., Dataset.csv, Person.csv) and make edits using the table view.
 
-+-----+----------+---------------------------+-------------+---------------------------+---------------------------+---------------------------+---------------------------+
-| No. | Severity | Focus Node                | Result Path | Message                   | Component                 | Shape                     | Value                     |
-+-----+----------+---------------------------+-------------+---------------------------+---------------------------+---------------------------+---------------------------+
-| 1   | Warning  | https://w3id.org/marco-bo | -           | All entities should be re | SPARQLConstraintComponent | http://w3id.org/marco-bol | MBO Identifier 'mbo_todo_ |
-|     |          | lo/mbo_todo_license_4     |             | ferenced somewhere else;  |                           | o/ShaclConstraints/Entit  | license_4' in License.csv |
-|     |          |                           |             | this is a warning, it is  |                           | iesShouldBeReferenced     |  doesn't appear to be ref |
-|     |          |                           |             | not enforced.             |                           |                           | erenced anywhere else.    |
-|     |          |                           |             |                           |                           |                           |                           |
-....
+4. Commit and Push Your Changes
+Go to the Source Control view (left-hand sidebar).
 
-```
+Enter a short message describing your edits.
 
-Pay attention to the `Focus Node` field which tells you which entity is the problem, as well as the `Message` and `Value` columns which tell you what the problem is.
-## Generating schema.org JSON-LD representation
+Click the + to stage your changes.
 
-```bash
-$ make
-....
-```
+Click “Commit & Push”.
 
-### Running Everything Locally
+This will trigger an automatic build of your metadata on GitHub Actions.
 
-1. Make sure you have installed docker on your machine. Installing [Docker Desktop](https://docs.docker.com/desktop/) may be the easiest way.
-2. Make sure that you have GNU Make, Bash and [jq](https://jqlang.org/) installed . 
-3. Make sure you have installed [git](https://git-scm.com/downloads) on your machine. then clone the repository locally with the following command:
+5. Confirm Your Edits Were Valid
+In the GitHub repository, switch to your working branch (e.g., wp1-playground).
 
-```bash
-$ git clone https://github.com/marco-bolo/csv-to-json-ld.git
-```
-4. Make the changes to the CSV files inside the `csv-to-json-ld` folder.
-5. Open a terminal in the repo you have just cloned and run the following:
+Look for a build called validate-csvws-build-jsonld.
 
-```bash
-$ make init check validate shacl-report
-```
+A green check mark means your changes passed validation.
+A red cross means there were errors — contact the WP1 team for help.
 
-This may take a bit of time as it will pull 4 substantially sized docker images from the internet. But it will eventually perform all of the validations (without actually generating the JSON-LD outputs)
+6. Download Your JSON-LD Output
+In the build results, click “Details” on the validate-csvws-build-jsonld job.
 
-5. Alternatively you can run the whole process which will perform the checks, validation and generate the resulting JSON-LD files in a directory called 'out'.
+In the summary view, download the ZIP artifact that contains the generated JSON-LD files.
 
-```bash
-$ make
-```
+Note: These artifacts are temporary and will expire after 90 days. Be sure to store the files elsewhere for long-term access.
 
-### Speed build
+## Hosting and Registration
 
-If you want speedy outputs, have multiple cores at your disposal, and don't mind incoherently timed log outputs then consider running make with a degree of parallelism (`p`): 
+To make your metadata discoverable by ODIS:
 
-```bash
-$ p=4 && make -j "$p" init && make -j "$p" validate shacl-report jsonld
-```
+1. **Host the generated JSON-LD** at a stable public URL (e.g., through GitHub Pages).
+2. **Register the URL with ODIS** so it can be harvested and indexed.
 
-Files are output in the `out` directory.
+## 📚 Documentation & Resources
 
-## <https://w3id.org/marco-bolo/ConvertMboIdToNode>
+- [Rendered model documentation](http://lab.marcobolo-project.eu/csv-to-json-ld/index.html)
+- CSV template and schema definitions in `/model/` and `/metadata/`
+- Examples and outputs in `/examples/` and `/out/`
 
-This is an identifier which is used in CSV-W metadata documents and is necessary due to limitations in the CSV on the web standard. The CSV-W standard supports delimited list columns, however only supports the serialisation of these to RDF literals and does not allow them to point to RDF Nodes. As a result, we use <https://w3id.org/marco-bolo/ConvertMboIdToNode> as the datatype in the CSV-W and later convert all of these literals into resource/node references in the build process. This process also sticks `https://w3id.org/marco-bolo/` on front of the value in the column.
+## Human Workflow
 
-N.B. <https://w3id.org/marco-bolo/ConvertIriToNode> provides a similar function but more generally for IRIs.
+This tool supports, but does not replace, human responsibility:
 
-## <https://w3id.org/marco-bolo/InputMetadataDescription>
+| Step | Role |
+|------|------|
+| Fill CSV templates | Data managers |
+| Maintain CSV-W metadata | Data managers |
+| Run validation and generation | Data managers or CI |
+| Host and register JSON-LD | Data managers |
 
-This is an identifier which is used to internally track the parametadata describing who input the metadata about something, when it was done, etc. 
+## License
 
-## <https://w3id.org/marco-bolo/isResultOf>
-
-An internal MBO predicate which effectively provides an inverse of <https://schema.org/result>. This allows us to specify the relationship `mbo:SomeAction schema:result mbo:SomeParaMetadata.` without having to modify create-action.csv or any of the outputs therefrom which would create an unhelpfully complex build dependencies graph. The resulting triple is represented in JSON-LD as a [@reverse](https://www.w3.org/TR/json-ld11/#reverse-properties) property.
-
-Only to be used in a triple where the subject is an instance of <https://w3id.org/marco-bolo/InputMetadataDescription> and the object is an action defined in create-action.csv
-
+This project is open source and licensed under the MIT License.
