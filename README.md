@@ -7,10 +7,21 @@ The tool enables researchers and data managers to convert structured metadata in
 
 ## Table of Contents
 
-TBD
+- [Documentation & Resources](#documentation--resources)
+- [How It Works](#how-it-works)
+  - [Workflow Summary](#workflow-summary)
+  - [Getting Started (No Installation Required)](#getting-started-no-installation-required)
+  - [Hosting and Registration](#hosting-and-registration)
+- [Understanding the constraints](#understanding-the-constraints)
+  - [✅ Required Fields and Validation Rules](#-required-fields-and-validation-rules)
+  - [Required Table Terms and Relationships](#required-table-terms-and-relationships)
+    - [Universally Required Fields](#universally-required-fields)
+    - [EXAMPLE: Minimum Required Files for a Dataset](#example-minimum-required-files-for-a-dataset)
+    - [Additional Required Fields by Table](#additional-required-fields-by-table)
+  - [🔍 Validation Rules (SHACL Constraints)](#-validation-rules-shacl-constraints)
+- [License](#license)
 
-
-## 📚 Documentation & Resources
+## Documentation & Resources
 
 - [Rendered model documentation](http://lab.marcobolo-project.eu/csv-to-json-ld/index.html)
 - [Table Dependency Viewer](./user_tools/dependency_viewer.html): See which tables are required or referenced for valid metadata records.
@@ -73,22 +84,25 @@ You can contribute metadata to MARCO-BOLO directly in your browser — no need t
    Be sure to store the files elsewhere for long-term access.*
 
 
-## Hosting and Registration
+### Hosting and Registration
 
 To make your metadata discoverable by ODIS:
 
 1. **Host the generated JSON-LD** at a stable public URL (e.g., through GitHub Pages).
 2. **[Register the resource with ODIS](https://book.odis.org/gettingStarted.html#quick-steps)** so it can be harvested and indexed.
 
-## ✅ Required Fields and Validation Rules
+
+## Understanding the constraints
+
+### ✅ Required Fields and Validation Rules
 
 Each CSV template has fields marked as **required**, and some fields must also follow **validation rules** (e.g., format restrictions or uniqueness constraints). These ensure your metadata is structured correctly and interoperable with global catalogs like [ODIS](https://catalog.odis.org).
 
-## Required Table Terms and Relationships
+### Required Table Terms and Relationships
 
 Before filling out any MARCO-BOLO CSV tables, it's important to understand which terms are required and how they depend on each other. 
 
-#### Universally Required Fields
+##### Universally Required Fields
 
 | Field                        | Meaning                                                                 |
 |-----------------------------|-------------------------------------------------------------------------|
@@ -100,7 +114,7 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 > In short, these relationships apply to *every other table* as well. No table stands alone — they all describe a resource that must be attributed (publisher) and scoped (action).
 
 
-#### EXAMPLE: **Minimum Required Files for a Dataset**
+##### EXAMPLE: **Minimum Required Files for a Dataset**
 >
 > To create a valid `Dataset.csv` row, you must also provide records in:
 >
@@ -111,7 +125,7 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 > | `Person.csv` **or** `Organization.csv` | To define the `metadataPublisherId` value          |
 
 
-### Additional Required Fields by Table
+#### Additional Required Fields by Table
 
 <details><summary><strong>Action.csv</strong></summary>
 
@@ -292,7 +306,7 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 ---
 
-### 🔍 Validation Rules (SHACL Constraints)
+#### 🔍 Validation Rules (SHACL Constraints)
 
 The system also applies additional validation rules using [SHACL](https://www.w3.org/TR/shacl/). These rules ensure the integrity of the metadata graph:
 
