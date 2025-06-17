@@ -19,7 +19,7 @@ WP1 of MARCO-BOLO supports the production of high-quality, FAIR metadata. This r
 
 ### Workflow Summary
 
-![](user_tools/img/csv-to-json-ld-workflow.png)
+<img src="user_tools/img/csv-to-json-ld-workflow.png" alt="Workflow diagram" height="400">
 
 The tool uses:
 
@@ -130,11 +130,13 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 <details><summary><strong>Audience.csv</strong></summary>
 
+
 - `audienceType`
 
 </details>
 
 <details><summary><strong>ContactPoint.csv</strong></summary>
+
 
 - `contactType`
 
@@ -142,12 +144,14 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 <details><summary><strong>DataDownload.csv</strong></summary>
 
+
 - `contentUrl`
 - `encodingFormat`
 
 </details>
 
 <details><summary><strong>Dataset.csv</strong></summary>
+
 
 - `name`
 - `description`
@@ -157,11 +161,13 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 <details><summary><strong>DatasetComment.csv</strong></summary>
 
+
 - `text`
 
 </details>
 
 <details><summary><strong>DefinedTerm.csv</strong></summary>
+
 
 - `name`
 
@@ -169,17 +175,20 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 <details><summary><strong>EmbargoStatement.csv</strong></summary>
 
+
 - `embargoDate`
 
 </details>
 
 <details><summary><strong>GeoShape.csv</strong></summary>
 
+
 - `containedInPlace`
 
 </details>
 
 <details><summary><strong>HowTo.csv</strong></summary>
+
 
 - `name`
 - `description`
@@ -188,6 +197,7 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 <details><summary><strong>HowToStep.csv</strong></summary>
 
+
 - `position`
 - `text`
 
@@ -195,11 +205,13 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 <details><summary><strong>HowToTip.csv</strong></summary>
 
+
 - `text`
 
 </details>
 
 <details><summary><strong>License.csv</strong></summary>
+
 
 - `name`
 - `url`
@@ -208,6 +220,7 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 <details><summary><strong>MonetaryGrant.csv</strong></summary>
 
+
 - `name`
 - `amount`
 
@@ -215,17 +228,20 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 <details><summary><strong>Organization.csv</strong></summary>
 
+
 - `name`
 
 </details>
 
 <details><summary><strong>Person.csv</strong></summary>
 
+
 - `name`
 
 </details>
 
 <details><summary><strong>Place.csv</strong></summary>
+
 
 - `name`
 - `address`
@@ -234,6 +250,7 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 <details><summary><strong>PropertyValue.csv</strong></summary>
 
+
 - `propertyID`
 - `value`
 
@@ -241,17 +258,20 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 <details><summary><strong>PublishingStatusDefinedTerm.csv</strong></summary>
 
+
 - `name`
 
 </details>
 
 <details><summary><strong>Service.csv</strong></summary>
 
+
 - `serviceType`
 
 </details>
 
 <details><summary><strong>SoftwareApplication.csv</strong></summary>
+
 
 - `name`
 - `applicationCategory`
@@ -260,15 +280,18 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 <details><summary><strong>SoftwareSourceCode.csv</strong></summary>
 
+
 - `codeRepository`
 
 </details>
 
 <details><summary><strong>Taxon.csv</strong></summary>
 
+
 - `scientificName`
 
 </details>
+
 
 > ✅ **Tip:** If any required field is missing, the GitHub Action will fail validation during the `validate-csvws-build-jsonld` step.
 
