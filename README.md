@@ -19,13 +19,13 @@ WP1 of MARCO-BOLO supports the production of high-quality, FAIR metadata. This r
 
 ### Workflow Summary
 
-<img src="user_tools/img/csv-to-json-ld-workflow.png" alt="Workflow diagram" height="400">
+<img src="user_tools/img/csv-to-json-ld-workflow.png" alt="Workflow diagram">
 
 The tool uses:
 
 - **[LinkML](https://linkml.io/)** to define metadata models (e.g., Dataset, Person, Organization)
 - **[CSV-W](https://csvw.org/)** metadata files to describe CSV structure
-- A **[Makefile](https://opensource.com/article/18/8/what-how-makefile)** and [GitHub Actions](https://github.com/features/actions) to automate validation and transformation steps
+- A **[Makefile](https://opensource.com/article/18/8/what-how-makefile)** and **[GitHub Actions](https://github.com/features/actions)** to automate validation and transformation steps
 - **[W3IDs](https://w3id.org/)** for stable context and schema identifiers of the metadata models.
 - **[Schema.org](https://schema.org/)** as the target vocabulary for JSON-LD output
 
@@ -124,6 +124,7 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 - `actionStatus`
 - `resultStatus`  
+
 *(Note: `metadataDescribedForActionId` is not required here because this is the root action being described)*
 
 </details>
