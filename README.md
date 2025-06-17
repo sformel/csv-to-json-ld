@@ -17,6 +17,10 @@ WP1 of MARCO-BOLO supports the production of high-quality, FAIR metadata. This r
 
 ## How It Works
 
+### Workflow Summary
+
+![](user_tools/img/csv-to-json-ld-workflow.png)
+
 The tool uses:
 
 - **[LinkML](https://linkml.io/)** to define metadata models (e.g., Dataset, Person, Organization)
@@ -25,64 +29,47 @@ The tool uses:
 - **[W3IDs](https://w3id.org/)** for stable context and schema identifiers of the metadata models.
 - **[Schema.org](https://schema.org/)** as the target vocabulary for JSON-LD output
 
-### Workflow Summary
-
-<p><img src="user_tools/img/csv-to-json-ld-workflow.svg" alt="CSV to JSON-LD Workflow" style="max-width: 100%; height: auto;" /></p>
-
 ### Getting Started (No Installation Required)
+
 You can contribute metadata to MARCO-BOLO directly in your browser — no need to install anything locally.
 
-1. Create a GitHub Account
-Go to https://github.com/signup and create a free GitHub account.
+1. **Create a GitHub Account**  
+   Go to [https://github.com/signup](https://github.com/signup) and create a free GitHub account.  
+   Contact the Work Package 1 (WP1) team to be added to the MARCO-BOLO organization and granted editing permissions.  
+   You won’t be able to contribute metadata until this is done.
 
-Contact the Work Package 1 (WP1) team to be added to the MARCO-BOLO organization and granted editing permissions. You won’t be able to contribute metadata until this is done.
+2. **Set Up Your GitHub.dev Environment**  
+   To edit metadata CSV files in a spreadsheet-like view:
+   - Open the recommended GitHub.dev profile.
+   - Click the “Create” button.
+   - If prompted, trust and install the “Excel Viewer” extension from MESCIUS.
+   - Tick the box: “Use this profile as the default for new windows”.
 
-2. Set Up Your GitHub.dev Environment
-To edit metadata CSV files in a spreadsheet-like view:
+3. **Edit Metadata in the Repo**  
+   Open the MARCO-BOLO metadata editor:  
+   [https://github.dev/marco-bolo/csv-to-json-ld/tree/wp1-playground](https://github.dev/marco-bolo/csv-to-json-ld/tree/wp1-playground)  
+   Sign in to GitHub when prompted and authorize GitHub.dev to access your account.  
+   Browse to the relevant CSV file (e.g., `Dataset.csv`, `Person.csv`) and make edits using the table view.
 
-Open the recommended GitHub.dev profile.
+4. **Commit and Push Your Changes**  
+   - Go to the Source Control view (left-hand sidebar).
+   - Enter a short message describing your edits.
+   - Click the ➕ icon to stage your changes.
+   - Click **“Commit & Push”**.  
+   This will trigger an automatic build of your metadata on GitHub Actions.
 
-Click the “Create” button.
+5. **Confirm Your Edits Were Valid**  
+   - In the GitHub repository, switch to your working branch (e.g., `wp1-playground`).
+   - Look for a build called `validate-csvws-build-jsonld`.  
+   A ✅ green check mark means your changes passed validation.  
+   A ❌ red cross means there were errors — contact the WP1 team for help.
 
-If prompted, trust and install the “Excel Viewer” extension from MESCIUS. This enables spreadsheet-style editing of CSV files.
+6. **Download Your JSON-LD Output**  
+   - In the build results, click **“Details”** on the `validate-csvws-build-jsonld` job.
+   - In the summary view, download the ZIP artifact that contains the generated JSON-LD files.  
+   ℹ️ *Note: These artifacts are temporary and will expire after 90 days.  
+   Be sure to store the files elsewhere for long-term access.*
 
-Tick the box: “Use this profile as the default for new windows”.
-
-This configures your browser to open CSVs with a table-based view.
-
-3. Edit Metadata in the Repo
-Open the MARCO-BOLO metadata editor:
-https://github.dev/marco-bolo/csv-to-json-ld/tree/wp1-playground
-
-Sign in to GitHub when prompted and authorize GitHub.dev to access your account.
-
-Browse to the relevant CSV file (e.g., Dataset.csv, Person.csv) and make edits using the table view.
-
-4. Commit and Push Your Changes
-Go to the Source Control view (left-hand sidebar).
-
-Enter a short message describing your edits.
-
-Click the + to stage your changes.
-
-Click “Commit & Push”.
-
-This will trigger an automatic build of your metadata on GitHub Actions.
-
-5. Confirm Your Edits Were Valid
-In the GitHub repository, switch to your working branch (e.g., wp1-playground).
-
-Look for a build called validate-csvws-build-jsonld.
-
-A green check mark means your changes passed validation.
-A red cross means there were errors — contact the WP1 team for help.
-
-6. Download Your JSON-LD Output
-In the build results, click “Details” on the validate-csvws-build-jsonld job.
-
-In the summary view, download the ZIP artifact that contains the generated JSON-LD files.
-
-Note: These artifacts are temporary and will expire after 90 days. Be sure to store the files elsewhere for long-term access.
 
 ## Hosting and Registration
 
