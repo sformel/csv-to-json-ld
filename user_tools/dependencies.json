@@ -1,0 +1,214 @@
+{
+  "Action": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "Action",
+      "Dataset",
+      "HowTo",
+      "PersonOrOrganization"
+    ]
+  },
+  "HowTo": {
+    "required": [
+      "Action",
+      "HowToStep",
+      "PersonOrOrganization"
+    ],
+    "optional": []
+  },
+  "HowToStep": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "Audience",
+      "HowToStep",
+      "HowToTip",
+      "PersonOrOrganization",
+      "Service",
+      "SoftwareApplication",
+      "SoftwareSourceCode"
+    ]
+  },
+  "HowToTip": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "Audience"
+    ]
+  },
+  "Dataset": {
+    "required": [
+      "Action",
+      "PersonOrOrganization",
+      "PropertyValue"
+    ],
+    "optional": [
+      "Audience",
+      "DataDownload",
+      "EmbargoStatement",
+      "License",
+      "PersonOrOrganization",
+      "Place",
+      "PublishingStatusDefinedTerm",
+      "Taxon"
+    ]
+  },
+  "Person": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "ContactPoint",
+      "Organization"
+    ]
+  },
+  "Organization": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "ContactPoint",
+      "MonetaryGrant",
+      "Organization"
+    ]
+  },
+  "ContactPoint": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": []
+  },
+  "License": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": []
+  },
+  "PropertyValue": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "PropertyValue"
+    ]
+  },
+  "DataDownload": {
+    "required": [
+      "Action",
+      "Dataset",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "Audience",
+      "License",
+      "PersonOrOrganization",
+      "PublishingStatusDefinedTerm"
+    ]
+  },
+  "DatasetComment": {
+    "required": [
+      "Action",
+      "Dataset",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "PersonOrOrganization"
+    ]
+  },
+  "SoftwareSourceCode": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "PersonOrOrganization",
+      "PublishingStatusDefinedTerm"
+    ]
+  },
+  "SoftwareApplication": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "PersonOrOrganization",
+      "PublishingStatusDefinedTerm"
+    ]
+  },
+  "Service": {
+    "required": [
+      "Organization",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "Audience",
+      "Place"
+    ]
+  },
+  "EmbargoStatement": {
+    "required": [
+      "Action",
+      "Dataset",
+      "PersonOrOrganization"
+    ],
+    "optional": []
+  },
+  "DefinedTerm": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": []
+  },
+  "Place": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "GeoShape"
+    ]
+  },
+  "GeoShape": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": []
+  },
+  "MonetaryGrant": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": [
+      "Organization"
+    ]
+  },
+  "Taxon": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": []
+  },
+  "Audience": {
+    "required": [
+      "Action",
+      "PersonOrOrganization"
+    ],
+    "optional": []
+  }
+}

@@ -1,0 +1,31 @@
+from linkml_runtime.utils.schemaview import SchemaView
+from collections import defaultdict
+import json
+
+# Load your schema
+sv = SchemaView("remote/models/classes.yaml", merge_imports=True)
+
+# Build dependency map
+dependency_map = defaultdict(lambda: {"required": set(), "optional": set()})
+
+for class_name, class_def in sv.all_classes().items():
+    if class_def.slots:
+        for slot_name in class_def.slots:
+            slot = sv.induced_slot(slot_name, class_name)
+            if slot.range in sv.all_classes():
+                key = "required" if slot.required else "optional"
+                dependency_map[class_name][key].add(slot.range)
+
+# Convert to JSON-serializable form
+dependency_data = {
+    table: {
+        "required": sorted(list(deps["required"])),
+        "optional": sorted(list(deps["optional"]))
+    }
+    for table, deps in dependency_map.items()
+}
+
+# Save to file
+with open("user_tools/dependencies.json", "w") as f:
+    json.dump(dependency_data, f, indent=2)
+

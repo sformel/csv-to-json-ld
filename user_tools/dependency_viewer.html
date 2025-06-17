@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>MARCO-BOLO Table Dependency Viewer</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    select, ul { margin-top: 1rem; }
+    h2 { margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <h1>Table Dependency Viewer</h1>
+  <p>Select a table to see which other tables must or may be populated for valid metadata:</p>
+  
+  <select id="tableSelect"></select>
+
+  <div id="output">
+    <h2>Required Dependencies</h2>
+    <ul id="required"></ul>
+    <h2>Optional Dependencies</h2>
+    <ul id="optional"></ul>
+  </div>
+
+  <script>
+    let data = {};
+    async function loadDependencies() {
+      const response = await fetch('dependencies.json');
+      data = await response.json();
+
+      const select = document.getElementById('tableSelect');
+      Object.keys(data).sort().forEach(table => {
+        const option = document.createElement('option');
+        option.value = table;
+        option.textContent = table;
+        select.appendChild(option);
+      });
+
+      select.addEventListener('change', () => showDependencies(select.value));
+      showDependencies(select.value); // initial view
+    }
+
+    function showDependencies(table) {
+      const requiredList = document.getElementById('required');
+      const optionalList = document.getElementById('optional');
+      requiredList.innerHTML = '';
+      optionalList.innerHTML = '';
+
+      (data[table]?.required || []).forEach(dep => {
+        const li = document.createElement('li');
+        li.textContent = dep;
+        requiredList.appendChild(li);
+      });
+
+      (data[table]?.optional || []).forEach(dep => {
+        const li = document.createElement('li');
+        li.textContent = dep;
+        optionalList.appendChild(li);
+      });
+    }
+
+    loadDependencies();
+  </script>
+</body>
+</html>
+
