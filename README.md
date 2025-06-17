@@ -27,12 +27,7 @@ The tool uses:
 
 ### Workflow Summary
 
-flowchart TD
-    A[Fill in CSV templates<br/>(e.g. Dataset.csv, Person.csv)] --> B[Commit changes to GitHub<br/>Triggers GitHub Actions]
-    B --> C[Download JSON-LD artifact<br/>from GitHub Actions build]
-    C --> D[Host JSON-LD file<br/>at a public web location]
-    D --> E[Register JSON-LD endpoint<br/>with ODIS catalog]
-
+![](user_tools/img/csv-to-json-ld-workflow.svg)
 
 1. Fill in CSV templates (e.g. `Dataset.csv`, `Person.csv`)
 2. Commit changes; this kicks off GitHub Actions.
