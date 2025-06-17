@@ -9,15 +9,7 @@ This tool helps researchers and data managers transform metadata from structured
 
 ## Table of Contents
 
-- [Project Context](#-project-context)
-- [How It Works](#️-how-it-works)
-- [Workflow Summary](#-workflow-summary)
-- [Getting Started (No Installation Required)](#-getting-started-no-installation-required)
-- [Hosting and Registration](#-hosting-and-registration)
-- [Documentation & Resources](#-documentation--resources)
-- [Required Fields and Validation Rules](#-required-fields-and-validation-rules)
-- [Human Workflow](#-human-workflow)
-- [License](#-license)
+TBD
 
 ## Project Context
 
@@ -120,9 +112,9 @@ To make your metadata discoverable by ODIS:
 
 Each CSV template has fields marked as **required**, and some fields must also follow **validation rules** (e.g., format restrictions or uniqueness constraints). These ensure your metadata is structured correctly and interoperable with global catalogs like [ODIS](https://catalog.odis.org).
 
-### 🔒 Required Fields by CSV Template
+## Required Table Terms and Relationships
 
-Before filling out any table, note that most templates **inherit common required fields**. These include:
+Before filling out any MARCO-BOLO CSV tables, it's important to understand which terms are required and how they depend on each other. 
 
 #### ✅ Universal Required Fields
 
@@ -133,8 +125,22 @@ Before filling out any table, note that most templates **inherit common required
 | `metadataDescribedForActionId` | The ID of an Action that this record is describing (except for `Action.csv` itself) |
 
 > 🛠️ `id` may not be explicitly marked as `required: true` in the YAML schema, but is always treated as required because it is the primary key in the CSV-W.
+> In short, these relationships apply to *every other table* as well. No table stands alone — they all describe a resource that must be attributed (publisher) and scoped (action).
 
----
+### 🧰 User Tools
+
+- [Table Dependency Viewer](./user_tools/dependency_viewer.html): See which tables are required or referenced for valid metadata records.
+
+> [!EXAMPLE]
+> ### 🧱 Minimum Required Files for a Dataset
+> To create a valid `Dataset.csv` row, you must also provide records in:
+>
+> | File                                   | Why it's needed                                     |
+> |----------------------------------------|-----------------------------------------------------|
+> | `Dataset.csv`                          | The dataset record itself                           |
+> | `Action.csv`                           | To define the `metadataDescribedForActionId` value |
+> | `Person.csv` **or** `Organization.csv` | To define the `metadataPublisherId` value          |
+
 
 #### 🔎 Additional Required Fields by Table
 
@@ -304,49 +310,6 @@ The system also applies additional validation rules using [SHACL](https://www.w3
 
 > ⚠️ Warnings won’t stop your JSON-LD from being generated, but violations will.
 
-## Required Table Relationships
-
-Before filling out any MARCO-BOLO CSV tables, it's important to understand how they depend on each other. 
-
-## 🧰 User Tools
-
-- [Table Dependency Viewer](./user_tools/dependency_viewer.html): See which tables are required or referenced for valid metadata records.
-
-### 🔗 Key Rule
-
-> Every record — even in what feels like a "leaf" table — must be linked to:
-> - a `metadataPublisherId`, which refers to a Person or Organization
-> - a `metadataDescribedForActionId`, which refers to an Action
-
-These fields are required in nearly every table. If they are missing or point to invalid IDs, validation will fail.
-
----
-
-### 🧱 Minimum Required Files for a Dataset
-
-To create a valid `Dataset.csv` row, you must also provide records in:
-
-| File                  | Why it's needed                                     |
-|-----------------------|-----------------------------------------------------|
-| `Dataset.csv`         | The dataset record itself                           |
-| `Action.csv`          | To define the `metadataDescribedForActionId` value |
-| `Person.csv` **or** `Organization.csv` | To define the `metadataPublisherId` value      |
-
----
-
-These relationships apply to *every other table* as well. No table stands alone — they all describe a resource that must be attributed (publisher) and scoped (action).
-
-## Human Workflow
-
-This tool supports, but does not replace, human responsibility:
-
-| Step | Role |
-|------|------|
-| Fill CSV templates | Data managers |
-| Maintain CSV-W metadata | Data managers |
-| Run validation and generation | Data managers or CI |
-| Host and register JSON-LD | Data managers |
-
 ## License
 
-This project is open source and licensed under the MIT License.
+This project is open source and licensed under the [CC0 1.0 License](https://github.com/marco-bolo/csv-to-json-ld/blob/main/LICENSE)
