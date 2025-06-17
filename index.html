@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MARCO-BOLO CSV-to-JSON-LD Tool</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.6;
+      margin: 2rem;
+      max-width: 960px;
+    }
+    h1, h2, h3, h4 { color: #2c3e50; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1em;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5em;
+      text-align: left;
+    }
+    code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    .callout {
+      border-left: 4px solid #3b82f6;
+      background: #f0f8ff;
+      padding: 1em;
+      margin: 2em 0;
+    }
+    .tip {
+      background: #fefce8;
+      border-left: 4px solid #eab308;
+      padding: 1em;
+      margin-top: 2em;
+    }
+    summary { cursor: pointer; font-weight: bold; }
+    details { margin-bottom: 1em; }
+  </style>
+</head>
+<body>
+
+<h1>MARCO-BOLO CSV-to-JSON-LD Tool</h1>
+
+<p>This repository contains a metadata publishing tool developed for <strong>Work Package 1 (WP1)</strong> of the <a href="https://marcobolo-project.eu/">MARCO-BOLO</a> project (MARine COastal BiOdiversity Long-term Observations). WP1 focuses on data literacy and metadata flow across the project.</p>
+
+<p>Learn more about WP1 here: <a href="https://marcobolo-project.eu/work-packages/work-package-1">https://marcobolo-project.eu/work-packages/work-package-1</a></p>
+
+<p>This tool helps researchers and data managers transform metadata from structured CSV files into <strong>JSON-LD</strong> conforming to <strong>Schema.org</strong> and ready for harvesting by the <a href="https://catalog.odis.org/">ODIS Catalog</a>.</p>
+
+<h2>Project Context</h2>
+<p>WP1 of MARCO-BOLO supports the production of high-quality, FAIR metadata. This repository provides the reference toolchain for transforming project metadata into a format compatible with global discovery platforms such as ODIS.</p>
+
+<h2>How It Works</h2>
+<p>The tool uses:</p>
+<ul>
+  <li><a href="https://linkml.io/">LinkML</a> to define metadata models</li>
+  <li><a href="https://csvw.org/">CSV-W</a> metadata files to describe CSV structure</li>
+  <li><a href="https://opensource.com/article/18/8/what-how-makefile">Makefile</a> and <a href="https://github.com/features/actions">GitHub Actions</a> to automate validation and transformation</li>
+  <li><a href="https://w3id.org/">W3IDs</a> for stable context and schema URIs</li>
+  <li><a href="https://schema.org/">Schema.org</a> as the target vocabulary</li>
+</ul>
+
+<h3>Workflow Summary</h3>
+<ol>
+  <li>Fill in CSV templates (e.g. <code>Dataset.csv</code>, <code>Person.csv</code>)</li>
+  <li>Commit changes; this kicks off GitHub Actions</li>
+  <li>Download the JSON-LD files as an artifact</li>
+  <li>Host the JSON-LD at a public URL</li>
+  <li>Register it with <a href="https://catalog.odis.org">ODIS</a></li>
+</ol>
+
+<h3>Getting Started (No Installation Required)</h3>
+<ol>
+  <li>Create a GitHub Account at <a href="https://github.com/signup">https://github.com/signup</a>. Contact WP1 to join the organization.</li>
+  <li>Visit <a href="https://github.dev/marco-bolo/csv-to-json-ld/tree/wp1-playground">GitHub.dev Editor</a> and install the Excel Viewer extension.</li>
+  <li>Edit CSV files directly in-browser.</li>
+  <li>Commit & push changes to trigger validation.</li>
+  <li>Download JSON-LD output from the Actions panel.</li>
+</ol>
+
+<h2>📚 Documentation & Resources</h2>
+<ul>
+  <li><a href="http://lab.marcobolo-project.eu/csv-to-json-ld/index.html">Rendered model documentation</a></li>
+  <li>CSV schema definitions in <code>/model/</code> and <code>/metadata/</code></li>
+  <li>Examples and outputs in <code>/examples/</code> and <code>/out/</code></li>
+</ul>
+
+<h2>✅ Required Fields and Validation Rules</h2>
+<p>Each CSV template defines <strong>required fields</strong> and <strong>validation rules</strong> (e.g., format or uniqueness constraints). These ensure the metadata is structured and interoperable.</p>
+
+<h3>Universal Required Fields</h3>
+<table>
+  <thead>
+    <tr><th>Field</th><th>Meaning</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>Unique permanent identifier</td></tr>
+    <tr><td><code>metadataPublisherId</code></td><td>Publisher (from <code>Person.csv</code> or <code>Organization.csv</code>)</td></tr>
+    <tr><td><code>metadataDescribedForActionId</code></td><td>The Action this record describes</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <h3>🧱 Minimum Required Files for a Dataset</h3>
+  <p>To create a valid <code>Dataset.csv</code> row, you must also provide records in:</p>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Why it's needed</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>Dataset.csv</code></td><td>The dataset record itself</td></tr>
+      <tr><td><code>Action.csv</code></td><td>To define the <code>metadataDescribedForActionId</code> value</td></tr>
+      <tr><td><code>Person.csv</code> <strong>or</strong> <code>Organization.csv</code></td><td>To define the <code>metadataPublisherId</code> value</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>Want to explore required relationships? Try the <a href="./user_tools/dependency_viewer.html">Table Dependency Viewer</a>.</p>
+
+</body>
+</html>
