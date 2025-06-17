@@ -1,26 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>MARCO-BOLO Table Dependency Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: sans-serif; margin: 2rem; }
-    select, ul { margin-top: 1rem; }
-    h2 { margin-top: 2rem; }
+    :root {
+      --primary: #003049;
+      --accent: #d62828;
+      --background: #f8f9fa;
+      --card-bg: #ffffff;
+      --text: #212529;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      margin: 0;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: var(--primary);
+      font-size: 2rem;
+    }
+
+    select {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .card h2 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      margin: 0.5rem 0 1rem;
+    }
+
+    li {
+      padding: 0.25rem 0;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 0.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .grid {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .card {
+        flex: 1;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Table Dependency Viewer</h1>
-  <p>Select a table to see which other tables are required, or may need to be populated, for valid metadata:</p>
+  <h1>📊 MARCO-BOLO Table Dependency Viewer</h1>
+  <p>Select a metadata table to see which other tables are required or optionally referenced by it:</p>
   
   <select id="tableSelect"></select>
 
-  <div id="output">
-    <h2>Required Table Dependencies</h2>
-    <ul id="required"></ul>
-    <h2>Optional Table Dependencies</h2>
-    <it>If non-required terms are populated in the selected table, then these other tables may need to be populated too</it>
-    <ul id="optional"></ul>
+  <div class="grid">
+    <div class="card">
+      <h2>✅ Required Dependencies</h2>
+      <ul id="required"></ul>
+    </div>
+
+    <div class="card">
+      <h2>🧩 Optional Dependencies</h2>
+      <p class="note">If optional fields are populated, these tables may also need entries.</p>
+      <ul id="optional"></ul>
+    </div>
   </div>
 
   <script>
@@ -38,7 +111,7 @@
       });
 
       select.addEventListener('change', () => showDependencies(select.value));
-      showDependencies(select.value); // initial view
+      showDependencies(select.value); // initial
     }
 
     function showDependencies(table) {
@@ -64,4 +137,3 @@
   </script>
 </body>
 </html>
-
