@@ -131,7 +131,7 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 
 - [Table Dependency Viewer](./user_tools/dependency_viewer.html): See which tables are required or referenced for valid metadata records.
 
-> [!EXAMPLE]
+> [!IMPORTANT]
 > ### 🧱 Minimum Required Files for a Dataset
 > To create a valid `Dataset.csv` row, you must also provide records in:
 >
