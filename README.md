@@ -27,13 +27,7 @@ The tool uses:
 
 ### Workflow Summary
 
-![](user_tools/img/csv-to-json-ld-workflow.svg)
-
-1. Fill in CSV templates (e.g. `Dataset.csv`, `Person.csv`)
-2. Commit changes; this kicks off GitHub Actions.
-3. Download the JSON-LD files as an 'artifact' from the GitHub Action.
-4. Make the JSON-LD publicly available on the internet as metadata for your resource (e.g. dataset)
-5. Register the JSON-LD endpoint with [ODIS](https://catalog.odis.org)
+<p><img src="user_tools/img/csv-to-json-ld-workflow.svg" alt="CSV to JSON-LD Workflow" style="max-width: 100%; height: auto;" /></p>
 
 ### Getting Started (No Installation Required)
 You can contribute metadata to MARCO-BOLO directly in your browser — no need to install anything locally.
