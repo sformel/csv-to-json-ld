@@ -122,37 +122,44 @@ Each CSV template has fields marked as **required**, and some fields must also f
 
 ### 🔒 Required Fields by CSV Template
 
-Below is a summary of required fields you must fill out in each template:
+Before filling out any table, note that most templates **inherit common required fields**. These include:
+
+#### ✅ Universal Required Fields
+
+| Field                        | Meaning                                                                 |
+|-----------------------------|-------------------------------------------------------------------------|
+| `id`                        | A unique permanent identifier (e.g. `mbo_abc123`)                        |
+| `metadataPublisherId`       | The ID of a Person or Organization who is publishing this metadata      |
+| `metadataDescribedForActionId` | The ID of an Action that this record is describing (except for `Action.csv` itself) |
+
+> 🛠️ `id` may not be explicitly marked as `required: true` in the YAML schema, but is always treated as required because it is the primary key in the CSV-W.
+
+---
+
+#### 🔎 Additional Required Fields by Table
 
 <details><summary><strong>Action.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `actionStatus`
-- `resultStatus`
+- `resultStatus`  
+*(Note: `metadataDescribedForActionId` is not required here because this is the root action being described)*
 
 </details>
 
 <details><summary><strong>Audience.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `audienceType`
 
 </details>
 
 <details><summary><strong>ContactPoint.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `contactType`
 
 </details>
 
 <details><summary><strong>DataDownload.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `contentUrl`
 - `encodingFormat`
 
@@ -160,8 +167,6 @@ Below is a summary of required fields you must fill out in each template:
 
 <details><summary><strong>Dataset.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `name`
 - `description`
 - `keywords`
@@ -170,40 +175,30 @@ Below is a summary of required fields you must fill out in each template:
 
 <details><summary><strong>DatasetComment.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `text`
 
 </details>
 
 <details><summary><strong>DefinedTerm.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `name`
 
 </details>
 
 <details><summary><strong>EmbargoStatement.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `embargoDate`
 
 </details>
 
 <details><summary><strong>GeoShape.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `containedInPlace`
 
 </details>
 
 <details><summary><strong>HowTo.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `name`
 - `description`
 
@@ -211,8 +206,6 @@ Below is a summary of required fields you must fill out in each template:
 
 <details><summary><strong>HowToStep.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `position`
 - `text`
 
@@ -220,16 +213,12 @@ Below is a summary of required fields you must fill out in each template:
 
 <details><summary><strong>HowToTip.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `text`
 
 </details>
 
 <details><summary><strong>License.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `name`
 - `url`
 
@@ -237,8 +226,6 @@ Below is a summary of required fields you must fill out in each template:
 
 <details><summary><strong>MonetaryGrant.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `name`
 - `amount`
 
@@ -246,24 +233,18 @@ Below is a summary of required fields you must fill out in each template:
 
 <details><summary><strong>Organization.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `name`
 
 </details>
 
 <details><summary><strong>Person.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `name`
 
 </details>
 
 <details><summary><strong>Place.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `name`
 - `address`
 
@@ -271,8 +252,6 @@ Below is a summary of required fields you must fill out in each template:
 
 <details><summary><strong>PropertyValue.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `propertyID`
 - `value`
 
@@ -280,24 +259,18 @@ Below is a summary of required fields you must fill out in each template:
 
 <details><summary><strong>PublishingStatusDefinedTerm.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `name`
 
 </details>
 
 <details><summary><strong>Service.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `serviceType`
 
 </details>
 
 <details><summary><strong>SoftwareApplication.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `name`
 - `applicationCategory`
 
@@ -305,21 +278,18 @@ Below is a summary of required fields you must fill out in each template:
 
 <details><summary><strong>SoftwareSourceCode.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `codeRepository`
 
 </details>
 
 <details><summary><strong>Taxon.csv</strong></summary>
 
-- `id`
-- `metadataPublisherId`
 - `scientificName`
 
 </details>
 
-> ✅ Tip: If any required field is missing, the GitHub Action will fail validation during the `validate-csvws-build-jsonld` step.
+> ✅ **Tip:** If any required field is missing, the GitHub Action will fail validation during the `validate-csvws-build-jsonld` step.
+
 
 ---
 
@@ -333,6 +303,36 @@ The system also applies additional validation rules using [SHACL](https://www.w3
 | **Entity Should Be Referenced** | ⚠️ Warning | Any entity you define (e.g. a `Person`, `Place`, or `SoftwareApplication`) should be referenced somewhere else in the metadata (e.g. as a `creator`, `location`, or `usedSoftware`). |
 
 > ⚠️ Warnings won’t stop your JSON-LD from being generated, but violations will.
+
+## Required Table Relationships
+
+Before filling out any MARCO-BOLO CSV tables, it's important to understand how they depend on each other.
+
+### 🔗 Key Rule
+
+> Every record — even in what feels like a "leaf" table — must be linked to:
+> - a `metadataPublisherId`, which refers to a Person or Organization
+> - a `metadataDescribedForActionId`, which refers to an Action
+
+These fields are required in nearly every table. If they are missing or point to invalid IDs, validation will fail.
+
+---
+
+### 🧱 Minimum Required Files for a Dataset
+
+To create a valid `Dataset.csv` row, you must also provide records in:
+
+| File                  | Why it's needed                                     |
+|-----------------------|-----------------------------------------------------|
+| `Dataset.csv`         | The dataset record itself                           |
+| `Action.csv`          | To define the `metadataDescribedForActionId` value |
+| `Person.csv` **or** `Organization.csv` | To define the `metadataPublisherId` value      |
+
+---
+
+These relationships apply to *every other table* as well. No table stands alone — they all describe a resource that must be attributed (publisher) and scoped (action).
+
+
 
 ## Human Workflow
 
