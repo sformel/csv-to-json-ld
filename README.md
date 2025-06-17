@@ -1,25 +1,27 @@
 
 # MARCO-BOLO CSV-to-JSON-LD Tool
 
-This repository contains a metadata publishing tool developed for **Work Package 1 (WP1)** of the [**MARCO-BOLO** project](https://marcobolo-project.eu/) (MARine COastal BiOdiversity Long-term Observations). WP1 focuses on data literacy and metadata flow across the project.
+This repository provides the official metadata publishing tool for [**Work Package 1 (WP1)**](https://marcobolo-project.eu/work-packages/work-package-1) of the [**MARCO-BOLO** project](https://marcobolo-project.eu/), which focuses on improving data literacy and metadata flow across the project.
 
-Learn more about WP1 here: [https://marcobolo-project.eu/work-packages/work-package-1](https://marcobolo-project.eu/work-packages/work-package-1)
-
-This tool helps researchers and data managers transform metadata from structured CSV files into **JSON-LD** conforming to **Schema.org** and ready for harvesting by the [ODIS Catalog](https://catalog.odis.org/).
+The tool enables researchers and data managers to convert structured metadata in CSV format into **JSON-LD** using the **Schema.org** vocabulary. The output is fully compatible with global discovery platforms like the [ODIS Catalog](https://catalog.odis.org/).
 
 ## Table of Contents
 
 TBD
 
-## Project Context
 
-WP1 of MARCO-BOLO supports the production of high-quality, FAIR metadata. This repository provides the reference toolchain for transforming project metadata into a format compatible with global discovery platforms such as ODIS.
+## 📚 Documentation & Resources
+
+- [Rendered model documentation](http://lab.marcobolo-project.eu/csv-to-json-ld/index.html)
+- [Table Dependency Viewer](./user_tools/dependency_viewer.html): See which tables are required or referenced for valid metadata records.
 
 ## How It Works
 
 ### Workflow Summary
 
 <img src="user_tools/img/csv-to-json-ld-workflow.png" alt="Workflow diagram">
+
+_The user, usually a data manager, populates CSV templates in the GitHub repo (not clear yet if it should be a new branch or fork ([see GH issue #40](https://github.com/marco-bolo/csv-to-json-ld/issues/40)), and triggers building of JSON-LD documents by commiting those changes to the GitHub repo. The JSON-LD that is produced can be hosted and registered with ODIS to ensure the research products are discoverable._
 
 The tool uses:
 
@@ -54,7 +56,6 @@ You can contribute metadata to MARCO-BOLO directly in your browser — no need t
 4. **Commit and Push Your Changes**  
    - Go to the Source Control view (left-hand sidebar).
    - Enter a short message describing your edits.
-   - Click the ➕ icon to stage your changes.
    - Click **“Commit & Push”**.  
    This will trigger an automatic build of your metadata on GitHub Actions.
 
@@ -62,11 +63,12 @@ You can contribute metadata to MARCO-BOLO directly in your browser — no need t
    - In the GitHub repository, switch to your working branch (e.g., `wp1-playground`).
    - Look for a build called `validate-csvws-build-jsonld`.  
    A ✅ green check mark means your changes passed validation.  
-   A ❌ red cross means there were errors — contact the WP1 team for help.
+   A ❌ red cross means there were errors. If you feel comfortable diving into GitHub Action logs, we encourage your to try and diagnose the error yourself. If not, please contact the WP1 team for help.
 
 6. **Download Your JSON-LD Output**  
    - In the build results, click **“Details”** on the `validate-csvws-build-jsonld` job.
    - In the summary view, download the ZIP artifact that contains the generated JSON-LD files.  
+
    ℹ️ *Note: These artifacts are temporary and will expire after 90 days.  
    Be sure to store the files elsewhere for long-term access.*
 
@@ -76,13 +78,7 @@ You can contribute metadata to MARCO-BOLO directly in your browser — no need t
 To make your metadata discoverable by ODIS:
 
 1. **Host the generated JSON-LD** at a stable public URL (e.g., through GitHub Pages).
-2. **Register the URL with ODIS** so it can be harvested and indexed.
-
-## 📚 Documentation & Resources
-
-- [Rendered model documentation](http://lab.marcobolo-project.eu/csv-to-json-ld/index.html)
-- CSV template and schema definitions in `/model/` and `/metadata/`
-- Examples and outputs in `/examples/` and `/out/`
+2. **[Register the resource with ODIS](https://book.odis.org/gettingStarted.html#quick-steps)** so it can be harvested and indexed.
 
 ## ✅ Required Fields and Validation Rules
 
@@ -92,7 +88,7 @@ Each CSV template has fields marked as **required**, and some fields must also f
 
 Before filling out any MARCO-BOLO CSV tables, it's important to understand which terms are required and how they depend on each other. 
 
-#### ✅ Universal Required Fields
+#### Universally Required Fields
 
 | Field                        | Meaning                                                                 |
 |-----------------------------|-------------------------------------------------------------------------|
@@ -103,12 +99,9 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 > 🛠️ `id` may not be explicitly marked as `required: true` in the YAML schema, but is always treated as required because it is the primary key in the CSV-W.
 > In short, these relationships apply to *every other table* as well. No table stands alone — they all describe a resource that must be attributed (publisher) and scoped (action).
 
-### 🧰 User Tools
 
-- [Table Dependency Viewer](./user_tools/dependency_viewer.html): See which tables are required or referenced for valid metadata records.
-
-> [!IMPORTANT]
-> ### 🧱 Minimum Required Files for a Dataset
+#### EXAMPLE: **Minimum Required Files for a Dataset**
+>
 > To create a valid `Dataset.csv` row, you must also provide records in:
 >
 > | File                                   | Why it's needed                                     |
@@ -118,7 +111,7 @@ Before filling out any MARCO-BOLO CSV tables, it's important to understand which
 > | `Person.csv` **or** `Organization.csv` | To define the `metadataPublisherId` value          |
 
 
-#### 🔎 Additional Required Fields by Table
+### Additional Required Fields by Table
 
 <details><summary><strong>Action.csv</strong></summary>
 
