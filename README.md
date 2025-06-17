@@ -332,7 +332,127 @@ To create a valid `Dataset.csv` row, you must also provide records in:
 
 These relationships apply to *every other table* as well. No table stands alone — they all describe a resource that must be attributed (publisher) and scoped (action).
 
+### Required Cross-Table Dependencies
 
+| Table               | Depends on Table     | Field                            | Multivalued   |
+|:--------------------|:---------------------|:---------------------------------|:--------------|
+| Action              | Action               | metadataDescribedForActionId     | No            |
+| Action              | PersonOrOrganization | agentId                          | No            |
+| Action              | PersonOrOrganization | metadataPublisherId              | No            |
+| Audience            | Action               | metadataDescribedForActionId     | No            |
+| Audience            | PersonOrOrganization | metadataPublisherId              | No            |
+| ContactPoint        | Action               | metadataDescribedForActionId     | No            |
+| ContactPoint        | PersonOrOrganization | metadataPublisherId              | No            |
+| DataDownload        | Action               | metadataDescribedForActionId     | No            |
+| DataDownload        | Dataset              | datasetMboId                     | No            |
+| DataDownload        | PersonOrOrganization | metadataPublisherId              | No            |
+| Dataset             | Action               | metadataDescribedForActionId     | No            |
+| Dataset             | PersonOrOrganization | metadataPublisherId              | No            |
+| Dataset             | PropertyValue        | containsVariablesMboIds          | Yes           |
+| DatasetComment      | Action               | metadataDescribedForActionId     | No            |
+| DatasetComment      | Dataset              | commentAboutDatasetMboId         | No            |
+| DatasetComment      | PersonOrOrganization | metadataPublisherId              | No            |
+| DefinedTerm         | Action               | metadataDescribedForActionId     | No            |
+| DefinedTerm         | PersonOrOrganization | metadataPublisherId              | No            |
+| EmbargoStatement    | Action               | metadataDescribedForActionId     | No            |
+| EmbargoStatement    | Dataset              | embargoedDatasetMboId            | No            |
+| EmbargoStatement    | PersonOrOrganization | metadataPublisherId              | No            |
+| GeoShape            | Action               | metadataDescribedForActionId     | No            |
+| GeoShape            | PersonOrOrganization | metadataPublisherId              | No            |
+| HowTo               | Action               | metadataDescribedForActionId     | No            |
+| HowTo               | HowToStep            | howToStepMboId                   | No            |
+| HowTo               | PersonOrOrganization | metadataPublisherId              | No            |
+| HowToStep           | Action               | metadataDescribedForActionId     | No            |
+| HowToStep           | PersonOrOrganization | metadataPublisherId              | No            |
+| HowToTip            | Action               | metadataDescribedForActionId     | No            |
+| HowToTip            | PersonOrOrganization | metadataPublisherId              | No            |
+| License             | Action               | metadataDescribedForActionId     | No            |
+| License             | PersonOrOrganization | metadataPublisherId              | No            |
+| MonetaryGrant       | Action               | metadataDescribedForActionId     | No            |
+| MonetaryGrant       | PersonOrOrganization | metadataPublisherId              | No            |
+| Organization        | Action               | metadataDescribedForActionId     | No            |
+| Organization        | PersonOrOrganization | metadataPublisherId              | No            |
+| Person              | Action               | metadataDescribedForActionId     | No            |
+| Person              | PersonOrOrganization | metadataPublisherId              | No            |
+| Place               | Action               | metadataDescribedForActionId     | No            |
+| Place               | PersonOrOrganization | metadataPublisherId              | No            |
+| PropertyValue       | Action               | metadataDescribedForActionId     | No            |
+| PropertyValue       | PersonOrOrganization | metadataPublisherId              | No            |
+| Service             | Organization         | serviceProviderOrganizationMboId | No            |
+| Service             | PersonOrOrganization | metadataPublisherId              | No            |
+| SoftwareApplication | Action               | metadataDescribedForActionId     | No            |
+| SoftwareApplication | PersonOrOrganization | metadataPublisherId              | No            |
+| SoftwareSourceCode  | Action               | metadataDescribedForActionId     | No            |
+| SoftwareSourceCode  | PersonOrOrganization | metadataPublisherId              | No            |
+| Taxon               | Action               | metadataDescribedForActionId     | No            |
+| Taxon               | PersonOrOrganization | metadataPublisherId              | No            |
+
+
+#### Optional Cross-Table Dependencies
+
+| Table               | Depends on Table            | Field                         | Multivalued   |
+|:--------------------|:----------------------------|:------------------------------|:--------------|
+| Action              | Action                      | childActionMboIds             | Yes           |
+| Action              | Dataset                     | resultingDatasetMboIds        | Yes           |
+| Action              | HowTo                       | howToPerformActionMboId       | No            |
+| Action              | PersonOrOrganization        | participantIds                | Yes           |
+| DataDownload        | Audience                    | audienceMboIds                | Yes           |
+| DataDownload        | License                     | licenseMboId                  | No            |
+| DataDownload        | PersonOrOrganization        | authorId                      | No            |
+| DataDownload        | PersonOrOrganization        | contributorIds                | Yes           |
+| DataDownload        | PersonOrOrganization        | maintainerId                  | No            |
+| DataDownload        | PersonOrOrganization        | ownerId                       | No            |
+| DataDownload        | PersonOrOrganization        | publisherId                   | No            |
+| DataDownload        | PublishingStatusDefinedTerm | publishingStatusMboId         | No            |
+| Dataset             | Audience                    | audienceMboIds                | Yes           |
+| Dataset             | DataDownload                | dataDownloadMboIds            | Yes           |
+| Dataset             | EmbargoStatement            | embargoStatementMboId         | No            |
+| Dataset             | License                     | licenseMboId                  | No            |
+| Dataset             | PersonOrOrganization        | authorId                      | No            |
+| Dataset             | PersonOrOrganization        | contributorIds                | Yes           |
+| Dataset             | PersonOrOrganization        | maintainerId                  | No            |
+| Dataset             | PersonOrOrganization        | ownerId                       | No            |
+| Dataset             | PersonOrOrganization        | publisherId                   | No            |
+| Dataset             | Place                       | spatialCoveragePlaceMboId     | No            |
+| Dataset             | PublishingStatusDefinedTerm | publishingStatusMboId         | No            |
+| Dataset             | Taxon                       | aboutTaxonMboIds              | Yes           |
+| DatasetComment      | PersonOrOrganization        | authorId                      | No            |
+| HowToStep           | Audience                    | audienceMboIds                | Yes           |
+| HowToStep           | HowToStep                   | childStepMboIds               | Yes           |
+| HowToStep           | HowToTip                    | howToImplementTipMboIds       | Yes           |
+| HowToStep           | PersonOrOrganization        | contributorIds                | Yes           |
+| HowToStep           | PersonOrOrganization        | providerId                    | No            |
+| HowToStep           | Service                     | citeServiceMboIds             | Yes           |
+| HowToStep           | SoftwareApplication         | citeSoftwareApplicationMboIds | Yes           |
+| HowToStep           | SoftwareSourceCode          | citeSourceCodeMboIds          | Yes           |
+| HowToTip            | Audience                    | audienceMboIds                | Yes           |
+| MonetaryGrant       | Organization                | funderOrganizationMboIds      | Yes           |
+| MonetaryGrant       | Organization                | sponsorOrganizationMboIds     | Yes           |
+| Organization        | ContactPoint                | contactPointMboIds            | Yes           |
+| Organization        | MonetaryGrant               | fundingGrantMboIds            | Yes           |
+| Organization        | Organization                | departmentMboIds              | Yes           |
+| Organization        | Organization                | memberOfOrganizationMboIds    | Yes           |
+| Organization        | Organization                | parentOrganizationMboId       | No            |
+| Person              | ContactPoint                | contactPointMboIds            | Yes           |
+| Person              | Organization                | affiliatedOrganizationMboIds  | Yes           |
+| Person              | Organization                | worksForOrganizationMboIds    | Yes           |
+| Place               | GeoShape                    | geoShapeMboId                 | No            |
+| PropertyValue       | PropertyValue               | isTypeOfPropertyValueMboId    | Yes           |
+| Service             | Audience                    | audienceMboIds                | Yes           |
+| Service             | Place                       | placesServedMboIds            | Yes           |
+| SoftwareApplication | PersonOrOrganization        | authorId                      | No            |
+| SoftwareApplication | PersonOrOrganization        | contributorIds                | Yes           |
+| SoftwareApplication | PersonOrOrganization        | maintainerId                  | No            |
+| SoftwareApplication | PersonOrOrganization        | ownerId                       | No            |
+| SoftwareApplication | PersonOrOrganization        | providerId                    | No            |
+| SoftwareApplication | PersonOrOrganization        | publisherId                   | No            |
+| SoftwareApplication | PublishingStatusDefinedTerm | publishingStatusMboId         | No            |
+| SoftwareSourceCode  | PersonOrOrganization        | authorId                      | No            |
+| SoftwareSourceCode  | PersonOrOrganization        | contributorIds                | Yes           |
+| SoftwareSourceCode  | PersonOrOrganization        | maintainerId                  | No            |
+| SoftwareSourceCode  | PersonOrOrganization        | ownerId                       | No            |
+| SoftwareSourceCode  | PersonOrOrganization        | publisherId                   | No            |
+| SoftwareSourceCode  | PublishingStatusDefinedTerm | publishingStatusMboId         | No            |
 
 ## Human Workflow
 
