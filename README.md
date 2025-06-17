@@ -15,6 +15,7 @@ This tool helps researchers and data managers transform metadata from structured
 - [Getting Started (No Installation Required)](#-getting-started-no-installation-required)
 - [Hosting and Registration](#-hosting-and-registration)
 - [Documentation & Resources](#-documentation--resources)
+- [Required Fields and Validation Rules](#-required-fields-and-validation-rules)
 - [Human Workflow](#-human-workflow)
 - [License](#-license)
 
@@ -114,6 +115,224 @@ To make your metadata discoverable by ODIS:
 - [Rendered model documentation](http://lab.marcobolo-project.eu/csv-to-json-ld/index.html)
 - CSV template and schema definitions in `/model/` and `/metadata/`
 - Examples and outputs in `/examples/` and `/out/`
+
+## ✅ Required Fields and Validation Rules
+
+Each CSV template has fields marked as **required**, and some fields must also follow **validation rules** (e.g., format restrictions or uniqueness constraints). These ensure your metadata is structured correctly and interoperable with global catalogs like [ODIS](https://catalog.odis.org).
+
+### 🔒 Required Fields by CSV Template
+
+Below is a summary of required fields you must fill out in each template:
+
+<details><summary><strong>Action.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `actionStatus`
+- `resultStatus`
+
+</details>
+
+<details><summary><strong>Audience.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `audienceType`
+
+</details>
+
+<details><summary><strong>ContactPoint.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `contactType`
+
+</details>
+
+<details><summary><strong>DataDownload.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `contentUrl`
+- `encodingFormat`
+
+</details>
+
+<details><summary><strong>Dataset.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `name`
+- `description`
+- `keywords`
+
+</details>
+
+<details><summary><strong>DatasetComment.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `text`
+
+</details>
+
+<details><summary><strong>DefinedTerm.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `name`
+
+</details>
+
+<details><summary><strong>EmbargoStatement.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `embargoDate`
+
+</details>
+
+<details><summary><strong>GeoShape.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `containedInPlace`
+
+</details>
+
+<details><summary><strong>HowTo.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `name`
+- `description`
+
+</details>
+
+<details><summary><strong>HowToStep.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `position`
+- `text`
+
+</details>
+
+<details><summary><strong>HowToTip.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `text`
+
+</details>
+
+<details><summary><strong>License.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `name`
+- `url`
+
+</details>
+
+<details><summary><strong>MonetaryGrant.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `name`
+- `amount`
+
+</details>
+
+<details><summary><strong>Organization.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `name`
+
+</details>
+
+<details><summary><strong>Person.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `name`
+
+</details>
+
+<details><summary><strong>Place.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `name`
+- `address`
+
+</details>
+
+<details><summary><strong>PropertyValue.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `propertyID`
+- `value`
+
+</details>
+
+<details><summary><strong>PublishingStatusDefinedTerm.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `name`
+
+</details>
+
+<details><summary><strong>Service.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `serviceType`
+
+</details>
+
+<details><summary><strong>SoftwareApplication.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `name`
+- `applicationCategory`
+
+</details>
+
+<details><summary><strong>SoftwareSourceCode.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `codeRepository`
+
+</details>
+
+<details><summary><strong>Taxon.csv</strong></summary>
+
+- `id`
+- `metadataPublisherId`
+- `scientificName`
+
+</details>
+
+> ✅ Tip: If any required field is missing, the GitHub Action will fail validation during the `validate-csvws-build-jsonld` step.
+
+---
+
+### 🔍 Validation Rules (SHACL Constraints)
+
+The system also applies additional validation rules using [SHACL](https://www.w3.org/TR/shacl/). These rules ensure the integrity of the metadata graph:
+
+| Rule | Type | Description |
+|------|------|-------------|
+| **MBO Identifier Must Be Unique** | ❌ Violation | Each `id` (e.g. `mbo_tool_001`) must appear in only one CSV file. It cannot represent multiple entities across files. |
+| **Entity Should Be Referenced** | ⚠️ Warning | Any entity you define (e.g. a `Person`, `Place`, or `SoftwareApplication`) should be referenced somewhere else in the metadata (e.g. as a `creator`, `location`, or `usedSoftware`). |
+
+> ⚠️ Warnings won’t stop your JSON-LD from being generated, but violations will.
 
 ## Human Workflow
 
