@@ -11,14 +11,15 @@
 </head>
 <body>
   <h1>Table Dependency Viewer</h1>
-  <p>Select a table to see which other tables must or may be populated for valid metadata:</p>
+  <p>Select a table to see which other tables are required, or may need to be populated, for valid metadata:</p>
   
   <select id="tableSelect"></select>
 
   <div id="output">
-    <h2>Required Dependencies</h2>
+    <h2>Required Table Dependencies</h2>
     <ul id="required"></ul>
-    <h2>Optional Dependencies</h2>
+    <h2>Optional Table Dependencies</h2>
+    <it>If non-required terms are populated in the selected table, then these other tables may need to be populated too</it>
     <ul id="optional"></ul>
   </div>
 
