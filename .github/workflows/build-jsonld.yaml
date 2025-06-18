@@ -1,9 +1,12 @@
 name: Build
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+  workflow_dispatch:  # Allows manual triggering from the Actions tab
+
+  # Original automatic triggers (disabled for now):
+  # push:
+  #   branches:
+  #     - main
+  # pull_request:
 
 jobs:
   validate-csvws-build-jsonld:

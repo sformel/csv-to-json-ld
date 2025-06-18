@@ -1,8 +1,11 @@
-name: Build
+name: Build JSON-LD Files
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:  # Allows manual triggering from the Actions tab
+
+  # Original automatic triggers (disabled for now):
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
   build-docs:
