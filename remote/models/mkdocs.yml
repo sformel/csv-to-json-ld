@@ -2,9 +2,9 @@ site_name: Marco-bolo CSV models
 theme:
   name: readthedocs
 use_directory_urls: false
-docs_dir: manual_docs
 
 nav:
+  - User Guide: manual_docs/tool-user-guide.md
   - Overview: index.md
   - CSV files:
       - Action: Action.md
