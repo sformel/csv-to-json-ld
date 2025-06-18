@@ -1,4 +1,4 @@
-name: Build
+name: Build JSON-LD
 on:
   workflow_dispatch:  # Allows manual triggering from the Actions tab
 
