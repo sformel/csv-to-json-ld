@@ -71,6 +71,9 @@ markdown-docs: $(LINKML_SCHEMA_FILES)
 		classes.yaml 
 
 docs: markdown-docs
+	@echo "Injecting custom manual docs..."
+	@cp user_tools/manual_docs/*.md docs/   # <-- copy after markdown-docs is run
+
 	$(eval DOCS := $(wildcard docs/*.md))
 	@echo "Converting mermaid diagrams to SVG in Markdown docs"
 	$(foreach doc,$(DOCS),$(MERMAID_CLI) -i "$(doc)" -o "$(doc)";)
