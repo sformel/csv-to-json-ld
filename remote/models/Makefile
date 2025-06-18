@@ -72,7 +72,7 @@ markdown-docs: $(LINKML_SCHEMA_FILES)
 
 docs: markdown-docs
 	@echo "Injecting custom manual docs..."
-	@cp remote/models/user_tools/manual_docs/*.md remote/models/docs/
+	@cp user_tools/manual_docs/*.md docs/
 
 	$(eval DOCS := $(wildcard docs/*.md))
 	@echo "Converting mermaid diagrams to SVG in Markdown docs"
