@@ -4,7 +4,7 @@ theme:
 use_directory_urls: false
 
 nav:
-  - Getting Started: tool-user-guide.md
+  - User Guide: manual_docs/tool-user-guide.md
   - Overview: index.md
   - CSV files:
       - Action: Action.md
