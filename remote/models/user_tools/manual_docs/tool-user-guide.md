@@ -24,7 +24,7 @@ The tool enables researchers and data managers to convert structured metadata in
 ## Documentation & Resources
 
 - [Rendered model documentation](http://lab.marcobolo-project.eu/csv-to-json-ld/index.html)
-- [Table Dependency Viewer](./user_tools/dependency_viewer.html): See which tables are required or referenced for valid metadata records.
+- [Table Dependency Viewer](./remote/models/user_tools/dependency_viewer.html): See which tables are required or referenced for valid metadata records.
 
 ## How It Works
 
